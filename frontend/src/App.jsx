@@ -1,6 +1,7 @@
 import FloatingShape from './components/FloatingShape';
 import {Routes, Route} from 'react-router-dom';
 import {LoginPage, SignUpPage, EmailVerificationPage} from './pages/index';
+import {Toaster} from 'react-hot-toast';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/verify-email" element={<EmailVerificationPage />} />
       </Routes>
+      <Toaster />
     </div>
   );
 }
