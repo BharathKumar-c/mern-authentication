@@ -9,6 +9,7 @@ import {
 import {Toaster} from 'react-hot-toast';
 import {useAuthStore} from './store/authStore';
 import {useEffect} from 'react';
+import LoadingSpinner from './components/LoadingSpinner';
 
 // protect routes that require authentication
 const ProtectedRoute = ({children}) => {
@@ -36,11 +37,15 @@ const RedirectAuthendicatedUser = ({children}) => {
 };
 
 function App() {
-  const {checkAuth} = useAuthStore();
+  const {checkAuth, isCheckingAuth} = useAuthStore();
 
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
+
+  if (isCheckingAuth) {
+    return <LoadingSpinner />;
+  }
 
   return (
     <div
