@@ -6,6 +6,7 @@ import {
   EmailVerificationPage,
   Dashboard,
   ForgotPasswordPage,
+  ResetPasswordPage,
 } from './pages/index';
 import {Toaster} from 'react-hot-toast';
 import {useAuthStore} from './store/authStore';
@@ -104,6 +105,14 @@ function App() {
           element={
             <RedirectAuthendicatedUser>
               <ForgotPasswordPage />
+            </RedirectAuthendicatedUser>
+          }
+        />
+        <Route
+          path="/reset-password/:token"
+          element={
+            <RedirectAuthendicatedUser>
+              <ResetPasswordPage />
             </RedirectAuthendicatedUser>
           }
         />
