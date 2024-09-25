@@ -11,6 +11,7 @@ export const useAuthStore = create((set) => ({
   isAuthenticated: false,
   error: null,
   isCheckingAuth: true,
+  message: null,
 
   signup: async (email, password, name) => {
     set({isCheckingAuth: true, error: null, isLoading: true});
@@ -80,23 +81,33 @@ export const useAuthStore = create((set) => ({
   },
 
   checkAuth: async () => {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    set({isLoading: true, error: null});
+    set({isCheckingAuth: true, error: null});
     try {
       const response = await axios.get(`${API_URL}/check-auth`);
       set({
         user: response.data.user,
         isAuthenticated: true,
         isCheckingAuth: false,
-        isLoading: false,
       });
     } catch (error) {
-      set({
-        error: null,
-        isLoading: false,
-        isCheckingAuth: false,
-        isAuthenticated: false,
+      set({error: null, isCheckingAuth: false, isAuthenticated: false});
+      console.log(`Error checking authentication: ${error.message}`);
+    }
+  },
+
+  forgotPassword: async (email) => {
+    set({isLoading: true, error: null, message: null});
+    try {
+      const response = await axios.post(`${API_URL}/forgot-password`, {
+        email,
       });
+      set({message: response.data.message, isLoading: false, error: null});
+    } catch (error) {
+      set({
+        error: error.response.data.message || 'Error sending reset email',
+        isLoading: false,
+      });
+      throw error;
     }
   },
 }));

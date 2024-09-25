@@ -5,6 +5,7 @@ import {
   SignUpPage,
   EmailVerificationPage,
   Dashboard,
+  ForgotPasswordPage,
 } from './pages/index';
 import {Toaster} from 'react-hot-toast';
 import {useAuthStore} from './store/authStore';
@@ -98,6 +99,14 @@ function App() {
           }
         />
         <Route path="/verify-email" element={<EmailVerificationPage />} />
+        <Route
+          path="/forgot-password"
+          element={
+            <RedirectAuthendicatedUser>
+              <ForgotPasswordPage />
+            </RedirectAuthendicatedUser>
+          }
+        />
       </Routes>
       <Toaster />
     </div>
